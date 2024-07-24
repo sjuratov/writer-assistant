@@ -45,7 +45,10 @@ except Exception as error:
 
 try:
     print(Fore.GREEN + "Creating an abstract of the document ...")
+    abstract_start_time = time.time()
     result = create_document(result.content)
+    abstract_time = time.time() - abstract_start_time
+    print(Fore.GREEN + f"Analysis completed in {abstract_time:.2f} seconds.")
     print(f"Here's the abstract of the paper:\n")
     print(result.choices[0].message.content)
 except Exception as error:
