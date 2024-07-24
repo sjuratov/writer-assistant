@@ -8,6 +8,7 @@ This repository contains the code for extracting content from scientific paper a
 - **Abstract generation**: Creates document abstract using specific template.
 - **Error Handling**: Includes generic error handling to catch and report issues during the analysis process.
 - **Performance Metrics**: Measures and reports the time taken to perform the content extraction and abstract generation.
+- **Abstract output**: Created abstract will be saved to 'abstracts' folder
 
 ## Getting Started
 
