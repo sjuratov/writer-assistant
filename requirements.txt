@@ -1,0 +1,6 @@
+azure-core
+azure-ai-formrecognizer
+azure-ai-documentintelligence
+python-dotenv
+openai
+colorama
