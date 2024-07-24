@@ -29,16 +29,15 @@ from write_assistant import create_document
 
 colorama.init(autoreset=True)
 
-print(Fore.GREEN + "Document analysis is in progress...")
-
 start_time = time.time()
 
 # Check if a URL is provided as a command line argument
 if len(sys.argv) > 1:
     url = sys.argv[1]
 else:
-    #url = "https://cob.silverchair-cdn.com/cob/content_public/journal/jcs/131/14/10.1242_jcs.186254/8/jcs186254.pdf?Expires=1724822537&Signature=SEdkl~B~m8Z8AeMboguMRS4WgAeHACgmN4CEb5bsbtfjN1mIIg2sjLVwkKaB0o5Ys1YGTut8jZjjHqPY6eZtnWr8CDqBrRLGb-N6QQzp7i9qBQBE1fOk86749~2o8gNWkITatoCfDGheDwMcbJo-IrCy4xB1NjbfMdhg1xhRIJDS8aErZsuS2p4nm6m28ycSk-qIB9BxIBp~NIMMRlWb90WmaI~oX2fuspGxmvsFlLni5m5fXJsZxH-ea5mxucnHXiVX2XZOoFwMW5rhUlf6n8oveiCPvHrPusddL6LsLfRHrDNlIj-EdtRcmwEu7PZSp0V~R4UnHXx1ram7zWk1UQ__&Key-Pair-Id=APKAIE5G5CRDK6RD3PGA"
     url = "https://www.nature.com/articles/s41586-024-07701-9.pdf"
+
+print(Fore.GREEN + f"Analyzing following document --> {url}")
 
 try:
     result = analyze_documents_output_in_markdown(url)
