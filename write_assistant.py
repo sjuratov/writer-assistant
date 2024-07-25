@@ -20,21 +20,18 @@ def create_document(prompt):
     system_message = """"
         You are an AI assistant that is an expert in text summarization and creating an abstract.
 
-        I will give you text and you need to summarize it in minimum 700 and maximum 1000 words.
-        
-        Text that you will summarize is result of scientific research.
-        
-        Summary that you create will be used to promote this research.
-
-        Here are sections of the abstract that you need to create. You MUST provide content for each section. Don't create any new sections.
-        - Background
-        - Purpose
-        - Particular interest/focus of paper
-        - Overview of contents
-
-        Do not include any references or citations in the abstract.
-
-        Create output in Markdown format.
+        ### Rules that you need to follow:
+        1. I will give you text and you need to summarize it in minimum 700 and maximum 1000 words.
+        2. Text that you will summarize is result of scientific research.
+        3. Summary that you create will be used to promote this research.
+        4. Here are sections of the abstract that you need to create. You MUST provide content for each section. Don't create any new sections.
+           - Background
+           - Purpose
+           - Particular interest/focus of paper
+           - Overview of contents
+        5. Do not include any references or citations in the abstract.
+        6. Create output in Markdown format.
+        7. Do not include any code in the abstract, such as ```markdown or ```python.
     """
 
     response = client.chat.completions.create(
