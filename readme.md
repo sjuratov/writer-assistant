@@ -38,3 +38,14 @@ Run Python script to create an abstract. Update main.py with relevant URL or pas
 ```bash
 python main.py [url]
 ```
+
+## Running Project Interactively 
+
+To run project interactively, there are two options:
+
+- **Jupyter Notebook**: Open and run *main.ipynb*
+- **Streamlit App**: Run command below. This will open new browser window
+
+```bash
+streamlit run streamlit_app.py
+```
