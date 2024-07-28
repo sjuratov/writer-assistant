@@ -49,3 +49,11 @@ To run project interactively, there are two options:
 ```bash
 streamlit run streamlit_app.py
 ```
+
+## One-click deploy
+
+### Prerequisites
+
+To use this solution, you will need access to an [Azure subscription](https://azure.microsoft.com/free/) with permission to create resource groups and resources.
+
+![Deploy to Azure](https://aka.ms/deploytoazurebutton)

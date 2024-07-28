@@ -1,0 +1,213 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.29.47.4906",
+      "templateHash": "29818789514318418"
+    }
+  },
+  "parameters": {
+    "solutionPrefix": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 6,
+      "metadata": {
+        "description": "Prefix Name"
+      }
+    },
+    "azureAIMultiServiceAccountLocation": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "azureOpenAIServiceLocation": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "deploy_azure_ai_service",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "solutionName": {
+            "value": "[parameters('solutionPrefix')]"
+          },
+          "solutionLocation": {
+            "value": "[parameters('azureAIMultiServiceAccountLocation')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.29.47.4906",
+              "templateHash": "14900700646237730459"
+            }
+          },
+          "parameters": {
+            "solutionName": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 15,
+              "metadata": {
+                "description": "Solution Name"
+              }
+            },
+            "solutionLocation": {
+              "type": "string"
+            },
+            "accounts_byc_cogser_name": {
+              "type": "string",
+              "defaultValue": "[format('{0}-cogser', parameters('solutionName'))]"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.CognitiveServices/accounts",
+              "apiVersion": "2023-05-01",
+              "name": "[parameters('accounts_byc_cogser_name')]",
+              "location": "[parameters('solutionLocation')]",
+              "sku": {
+                "name": "S0"
+              },
+              "kind": "CognitiveServices",
+              "identity": {
+                "type": "None"
+              },
+              "properties": {
+                "apiProperties": {},
+                "customSubDomainName": "[parameters('accounts_byc_cogser_name')]",
+                "networkAcls": {
+                  "defaultAction": "Allow",
+                  "virtualNetworkRules": [],
+                  "ipRules": []
+                },
+                "publicNetworkAccess": "Enabled"
+              }
+            }
+          ],
+          "outputs": {
+            "cogSearchOutput": {
+              "type": "object",
+              "value": {
+                "cogServiceName": "[parameters('accounts_byc_cogser_name')]",
+                "cogServiceKey": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_byc_cogser_name')), '2023-05-01').key1]",
+                "cogServiceEndpoint": "[reference(resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_byc_cogser_name')), '2023-05-01').endpoint]"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "deploy_azure_open_ai",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "solutionName": {
+            "value": "[parameters('solutionPrefix')]"
+          },
+          "solutionLocation": {
+            "value": "[parameters('azureOpenAIServiceLocation')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.29.47.4906",
+              "templateHash": "9616716097532372763"
+            }
+          },
+          "parameters": {
+            "solutionName": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 15,
+              "metadata": {
+                "description": "Solution Name"
+              }
+            },
+            "solutionLocation": {
+              "type": "string"
+            },
+            "accounts_byc_openai_name": {
+              "type": "string",
+              "defaultValue": "[format('{0}-openai', parameters('solutionName'))]"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.CognitiveServices/accounts",
+              "apiVersion": "2023-05-01",
+              "name": "[parameters('accounts_byc_openai_name')]",
+              "location": "[parameters('solutionLocation')]",
+              "sku": {
+                "name": "S0"
+              },
+              "kind": "OpenAI",
+              "properties": {
+                "customSubDomainName": "[parameters('accounts_byc_openai_name')]",
+                "networkAcls": {
+                  "defaultAction": "Allow",
+                  "virtualNetworkRules": [],
+                  "ipRules": []
+                },
+                "publicNetworkAccess": "Enabled"
+              }
+            },
+            {
+              "type": "Microsoft.CognitiveServices/accounts/deployments",
+              "apiVersion": "2023-05-01",
+              "name": "[format('{0}/{1}', parameters('accounts_byc_openai_name'), 'gpt-4o-global')]",
+              "sku": {
+                "name": "GlobalStandard",
+                "capacity": 30
+              },
+              "properties": {
+                "model": {
+                  "format": "OpenAI",
+                  "name": "gpt-4o",
+                  "version": "2024-05-13"
+                },
+                "versionUpgradeOption": "OnceNewDefaultVersionAvailable",
+                "raiPolicyName": "Microsoft.Default"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_byc_openai_name'))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "openAIOutput": {
+              "type": "object",
+              "value": {
+                "openAPIKey": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_byc_openai_name')), '2023-05-01').key1]",
+                "openAPIVersion": "2023-05-01",
+                "openAPIEndpoint": "[reference(resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_byc_openai_name')), '2023-05-01').endpoint]",
+                "openAIAccountName": "[parameters('accounts_byc_openai_name')]"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
