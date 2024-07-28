@@ -39,6 +39,9 @@ Run Python script to create an abstract. Update main.py with relevant URL or pas
 python main.py [url]
 ```
 
+Copy *.env.example* to *.env* and update environment variables as appropriate.
+
+
 ## Running Project Interactively 
 
 To run project interactively, there are two options:
