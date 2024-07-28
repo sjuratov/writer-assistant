@@ -63,3 +63,5 @@ To use this solution, you will need access to an [Azure subscription](https://az
 - Azure OpenAI
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fsjuratov%2Fwriter-assistant%2Fmain%2Finfra%2Fmain.json)
+
+*Note: Make sure to update .env file after deployment has completed.*
