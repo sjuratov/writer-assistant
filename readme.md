@@ -54,6 +54,9 @@ streamlit run streamlit_app.py
 
 ### Prerequisites
 
-To use this solution, you will need access to an [Azure subscription](https://azure.microsoft.com/free/) with permission to create resource groups and resources.
+To use this solution, you will need access to an [Azure subscription](https://azure.microsoft.com/free/) with permissions to create resource group and resources. Following resources will be created:
 
-![Deploy to Azure](https://aka.ms/deploytoazurebutton)
+- Azure AI services multi-service account
+- Azure OpenAI
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fsjuratov%2Fwriter-assistant%2Fmain%2Finfra%2Fmain.json)
