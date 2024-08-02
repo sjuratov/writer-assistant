@@ -33,10 +33,10 @@ Install Python libraries
 pip install -r requirements.txt
 ```
 
-Run Python script to create an abstract. Update main.py with relevant URL or pass URL to PDF document as an optional command line parameter.
+Run Python script to create an abstract. Make sure to provide parameter, which is path to local PDF document.
 
 ```bash
-python main.py [url]
+python main.py [path_to_local_PDF_document]
 ```
 
 Copy *.env.example* to *.env* and update environment variables as appropriate.
