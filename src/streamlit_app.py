@@ -2,7 +2,7 @@ import os
 import time
 import streamlit as st
 
-from write_assistant import create_document
+from modules.write_assistant import create_document
 
 from dotenv import find_dotenv, load_dotenv
 

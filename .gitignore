@@ -5,3 +5,4 @@ documents/
 abstracts/
 .vscode/
 assets/*.pptx
+.azure
