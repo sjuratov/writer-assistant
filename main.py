@@ -25,8 +25,8 @@ from colorama import Fore
 import sys
 import os
 
-from analyze_document_use_document_intelligence import analyze_documents_output_in_markdown
-from write_assistant import create_document
+from src.modules.analyze_document_use_document_intelligence import analyze_documents_output_in_markdown
+from src.modules.write_assistant import create_document
 
 colorama.init(autoreset=True)
 
