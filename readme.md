@@ -1,11 +1,15 @@
-# Writing Assistant Project
+# Content Generation Assistant
 
-This repository contains the code for extracting content from scientific paper and creating an abstract based on it. Project is using Azure Document Intelligence for content extraction to markdown format. It is then using Azure OpenAI for creation of the abstract.
+This repository contains the code for generating new content from existing documents. Type of newly generated content is driven by predifined templates (system prompt), and selected during runtime.
+
+Project is using Azure Document Intelligence for text extraction to markdown format. Extracted text is then sent, together with relevant system prompt, to Azure OpenAI for generation of new content.
+
+At the moment, PDF is the only supported input document format.
 
 ## Features
 
-- **Content extraction**: Extract content from PDF documents in markdown format.
-- **Abstract generation**: Creates document abstract using specific template.
+- **Text extraction**: Extract content from documents in markdown format.
+- **Content generation**: Creates new document using specific template.
 - **Error Handling**: Includes generic error handling to catch and report issues during the analysis process.
 - **Performance Metrics**: Measures and reports the time taken to perform the content extraction and abstract generation.
 - **Abstract output**: Created abstract will be saved to 'abstracts' folder
@@ -61,6 +65,8 @@ To use this solution, you will need access to an [Azure subscription](https://az
 
 - Azure AI services multi-service account
 - Azure OpenAI
+- Azure Container App
+- Azure Container Registry
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fsjuratov%2Fwriter-assistant%2Fmain%2Finfra%2Fmain.json)
 
