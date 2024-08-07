@@ -67,7 +67,7 @@ def main():
 
                 if 'json_ref' not in st.session_state:
                     st.session_state.json_ref = None
-                selected_prompt_title = st.selectbox('Select content type that needs to be generated:', df['Title'], 0, key='json')
+                selected_prompt_title = st.selectbox('Select content type that you would like to generate:', df['Title'], 0, key='json')
                 if st.session_state.json:
                     st.session_state.json_ref = st.session_state.json
                 selected_prompt_description = df.loc[df.Title == selected_prompt_title]["Description"].iloc[0]
