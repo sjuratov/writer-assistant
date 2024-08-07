@@ -67,9 +67,9 @@ def main():
         if st.session_state.json:
             st.session_state.json_ref = st.session_state.json
 
-        if st.button('Create Abstract'):
+        if st.button('Create'):
 
-            tab1, tab2 = st.tabs(["Input Document", "Generated Abstract"])
+            tab1, tab2 = st.tabs(["Input Document", "Generated Content"])
 
             with tab1:
                 if st.session_state.pdf_ref:
@@ -80,16 +80,16 @@ def main():
                 if st.session_state.pdf_ref and st.session_state.json_ref:
                     start_time = time.time()
 
-                    st.info("Analyzing the document ...", icon="⏳")
+                    st.info("Analyzing input document ...", icon="⏳")
                     doc = analyze_documents_output_in_markdown(file)
                     analysis_time = time.time() - start_time
                     st.info(f"Analysis completed in {analysis_time:.2f} seconds.", icon="✅")
 
-                    st.info("Creating an abstract of the document ...", icon="⏳")
+                    st.info(f"Generating {selected_prompt_title} ...", icon="⏳")
                     abstract_start_time = time.time()
                     abstract = create_document(doc.content, selected_prompt)
                     abstract_time = time.time() - abstract_start_time
-                    st.info(f"Abstract created in {abstract_time:.2f} seconds.", icon="✅")
+                    st.info(f"Generation completed in {abstract_time:.2f} seconds.", icon="✅")
                     
                     st.divider()
                     st.markdown(abstract.choices[0].message.content)
