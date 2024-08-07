@@ -19,4 +19,4 @@ HEALTHCHECK CMD curl --fail http://localhost:80/_stcore/health
 
 WORKDIR /app/src
 
-ENTRYPOINT ["streamlit", "run", "streamlit_app.py", "--server.port=80", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "streamlit_app.py", "--server.port=80", "--server.address=0.0.0.0", "--server.enableXsrfProtection=false"]

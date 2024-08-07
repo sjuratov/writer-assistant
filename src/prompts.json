@@ -16,7 +16,7 @@
                 "   - Overview of contents",
                 "5. Do not include any references or citations in the abstract.",
                 "6. Create output in Markdown format.",
-                "7. Do not include any code in the abstract, such as ```markdown or ```python."
+                "7. Do not include any code in the abstract, such as ```markdown, ```python, installation instructions and setup instructions."
             ]
         },
         {
@@ -29,7 +29,7 @@
                 "2. The blog post should be engaging, informative, and easy to read.",
                 "3. Use a conversational tone to connect with the readers.",
                 "4. Create output in Markdown format.",
-                "5. Do not include any code in the blog post, such as ```markdown or ```python.",
+                "5. Do not include any code in the blog post, such as ```markdown, ```python, installation instructions and setup instructions.",
                 "6. Do not include any references in the blog post."
             ]
         },
