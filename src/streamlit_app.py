@@ -44,40 +44,38 @@ def analyze_documents_output_in_markdown(f):
 
 def main():
     st.set_page_config(layout="centered")
-    st.title("Write Assistant")
+    st.title("Content Generation Assistant")
 
     if 'pdf_ref' not in st.session_state:
         st.session_state.pdf_ref = None
+    file = st.file_uploader("Upload PDF document that will be used to generate content:", type=["pdf"], key='pdf')
+    if st.session_state.pdf:
+        st.session_state.pdf_ref = st.session_state.pdf
 
-    if 'json_ref' not in st.session_state:
-        st.session_state.json_ref = None
+    if file: 
+        tab1, tab2 = st.tabs(["Input Document", "Generated Content"])
 
-    file = st.file_uploader("Upload PDF file that will be used for abstract creation:", type=["pdf"], key='pdf')
-    if file:
-        df = read_prompt()
+        with tab1:
+            if st.session_state.pdf_ref:
+                binary_data = st.session_state.pdf_ref.getvalue()
+                pdf_viewer(input=binary_data, width=700, height=800)
 
-        selected_prompt_title = st.selectbox('Select a prompt:', df['Title'], 0, key='json')
-        selected_prompt_description = df.loc[df.Title == selected_prompt_title]["Description"].iloc[0]
-        selected_prompt = ' '.join(df.loc[df.Title == selected_prompt_title]["Prompt"].iloc[0])
-        st.info(f"Prompt description: {selected_prompt_description}")
+        with tab2:
+            if st.session_state.pdf_ref:
 
-        if st.session_state.pdf:
-            st.session_state.pdf_ref = st.session_state.pdf
+                df = read_prompt()
 
-        if st.session_state.json:
-            st.session_state.json_ref = st.session_state.json
+                if 'json_ref' not in st.session_state:
+                    st.session_state.json_ref = None
+                selected_prompt_title = st.selectbox('Select content type that needs to be generated:', df['Title'], 0, key='json')
+                if st.session_state.json:
+                    st.session_state.json_ref = st.session_state.json
+                selected_prompt_description = df.loc[df.Title == selected_prompt_title]["Description"].iloc[0]
+                selected_prompt = ' '.join(df.loc[df.Title == selected_prompt_title]["Prompt"].iloc[0])
+                st.info(f"{selected_prompt_description}")
 
-        if st.button('Create'):
+                if st.button('Create'):
 
-            tab1, tab2 = st.tabs(["Input Document", "Generated Content"])
-
-            with tab1:
-                if st.session_state.pdf_ref:
-                    binary_data = st.session_state.pdf_ref.getvalue()
-                    pdf_viewer(input=binary_data, width=700, height=800)
-
-            with tab2:
-                if st.session_state.pdf_ref and st.session_state.json_ref:
                     start_time = time.time()
 
                     st.info("Analyzing input document ...", icon="⏳")

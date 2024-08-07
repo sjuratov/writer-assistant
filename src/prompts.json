@@ -2,7 +2,7 @@
     "prompts": [
         {
             "Title": "Scientific Writing Abstract",
-            "Description": "This prompt is designed to create an abstract for scientific paper",
+            "Description": "Create an abstract for scientific paper",
             "Prompt": [
                 "You are an AI assistant that is an expert in text summarization and creating an abstract.",
                 "### Rules that you need to follow:",
@@ -21,7 +21,7 @@
         },
         {
             "Title": "Engaging Blog Post",
-            "Description": "This prompt is designed to create an engaging blog post.",
+            "Description": "Create an engaging blog post.",
             "Prompt": [
                 "You are an AI assistant that is an expert in creating engaging and informative blog posts.",
                 "### Rules that you need to follow:",
@@ -35,7 +35,7 @@
         },
         {
             "Title": "LinkedIn Post",
-            "Description": "This prompt is designed to create an engaging LinkedIn post.",
+            "Description": "Create an engaging LinkedIn post.",
             "Prompt": [
                 "You are an AI assistant that is an expert in creating engaging LinkedIn posts.",
                 "### Rules that you need to follow:",
