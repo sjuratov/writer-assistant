@@ -5,7 +5,7 @@ from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
 
-def create_document(prompt):
+def create_document(prompt, system_prompt):
     api_key = os.getenv("AZURE_OPENAI_API_KEY")
     api_base = os.getenv("AZURE_OPENAI_ENDPOINT")
     api_version = "2024-05-01-preview"
@@ -17,22 +17,7 @@ def create_document(prompt):
         base_url=f"{api_base}/openai/deployments/{model}",
     )
 
-    system_message = """"
-        You are an AI assistant that is an expert in text summarization and creating an abstract.
-
-        ### Rules that you need to follow:
-        1. I will give you text and you need to summarize it in minimum 700 and maximum 1000 words.
-        2. Text that you will summarize is result of scientific research.
-        3. Summary that you create will be used to promote this research.
-        4. Here are sections of the abstract that you need to create. You MUST provide content for each section. Don't create any new sections.
-           - Background
-           - Purpose
-           - Particular interest/focus of paper
-           - Overview of contents
-        5. Do not include any references or citations in the abstract.
-        6. Create output in Markdown format.
-        7. Do not include any code in the abstract, such as ```markdown or ```python.
-    """
+    system_message = system_prompt
 
     response = client.chat.completions.create(
         model=model,
