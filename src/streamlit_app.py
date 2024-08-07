@@ -4,8 +4,17 @@ import streamlit as st
 from streamlit_pdf_viewer import pdf_viewer
 from modules.write_assistant import create_document
 from dotenv import find_dotenv, load_dotenv
+import json
+import pandas as pd
 
 load_dotenv(find_dotenv())
+
+def read_prompt(prompt_file = 'prompts.json'):
+    with open(prompt_file, 'r') as file:
+        data = json.load(file)
+    df = pd.json_normalize(data['prompts'])
+    df = df[['Title', 'Description', 'Prompt']]
+    return df
 
 def analyze_documents_output_in_markdown(f):
 
@@ -40,36 +49,50 @@ def main():
     if 'pdf_ref' not in st.session_state:
         st.session_state.pdf_ref = None
 
+    if 'json_ref' not in st.session_state:
+        st.session_state.json_ref = None
+
     file = st.file_uploader("Upload PDF file that will be used for abstract creation:", type=["pdf"], key='pdf')
-
-    if st.session_state.pdf:
-        st.session_state.pdf_ref = st.session_state.pdf
-
     if file:
+        df = read_prompt()
 
-        tab1, tab2 = st.tabs(["Input Document", "Generated Abstract"])
+        selected_prompt_title = st.selectbox('Select a prompt:', df['Title'], 0, key='json')
+        selected_prompt_description = df.loc[df.Title == selected_prompt_title]["Description"].iloc[0]
+        selected_prompt = ' '.join(df.loc[df.Title == selected_prompt_title]["Prompt"].iloc[0])
+        st.info(f"Prompt description: {selected_prompt_description}")
 
-        with tab1:
-            if st.session_state.pdf_ref:
-                binary_data = st.session_state.pdf_ref.getvalue()
-                pdf_viewer(input=binary_data, width=700, height=800)
+        if st.session_state.pdf:
+            st.session_state.pdf_ref = st.session_state.pdf
 
-        with tab2:
-            start_time = time.time()
+        if st.session_state.json:
+            st.session_state.json_ref = st.session_state.json
 
-            st.info("Analyzing the document ...", icon="⏳")
-            doc = analyze_documents_output_in_markdown(file)
-            analysis_time = time.time() - start_time
-            st.info(f"Analysis completed in {analysis_time:.2f} seconds.", icon="✅")
+        if st.button('Create Abstract'):
 
-            st.info("Creating an abstract of the document ...", icon="⏳")
-            abstract_start_time = time.time()
-            abstract = create_document(doc.content)
-            abstract_time = time.time() - abstract_start_time
-            st.info(f"Abstract created in {abstract_time:.2f} seconds.", icon="✅")
-            
-            st.divider()
-            st.markdown(abstract.choices[0].message.content)
+            tab1, tab2 = st.tabs(["Input Document", "Generated Abstract"])
+
+            with tab1:
+                if st.session_state.pdf_ref:
+                    binary_data = st.session_state.pdf_ref.getvalue()
+                    pdf_viewer(input=binary_data, width=700, height=800)
+
+            with tab2:
+                if st.session_state.pdf_ref and st.session_state.json_ref:
+                    start_time = time.time()
+
+                    st.info("Analyzing the document ...", icon="⏳")
+                    doc = analyze_documents_output_in_markdown(file)
+                    analysis_time = time.time() - start_time
+                    st.info(f"Analysis completed in {analysis_time:.2f} seconds.", icon="✅")
+
+                    st.info("Creating an abstract of the document ...", icon="⏳")
+                    abstract_start_time = time.time()
+                    abstract = create_document(doc.content, selected_prompt)
+                    abstract_time = time.time() - abstract_start_time
+                    st.info(f"Abstract created in {abstract_time:.2f} seconds.", icon="✅")
+                    
+                    st.divider()
+                    st.markdown(abstract.choices[0].message.content)
 
 if __name__ == "__main__":
     main()
